@@ -1,21 +1,18 @@
-import { useQuery } from "@tanstack/react-query";
-import useAuth from "../../usehook/useAuth";
-import useAxiosPublic from "../../usehook/useAxiosPublic";
+import useAxiosSecure from "../../usehook/useAxiosSecure";
+import useUser from "../../usehook/useUser";
 
 const Profile = () => {
-    const axiosPublic = useAxiosPublic();
-    const { user } = useAuth();
-    const { data: userData, isLoading } = useQuery({
-        queryKey: ['profile', user?.email],
-        queryFn: async () => {
-            if(isLoading) return <p>loading</p>;
-            const res = await axiosPublic.get(`/user/me/${user?.email}`)
-            return res.data;
-        },
-        enabled: !!user?.email
-    })
-    console.log(userData);
-    if (isLoading) return <p>loading ....</p>
+    const axiosSecure = useAxiosSecure();
+    const userData = useUser();
+
+    const handleCng = async (role) => {
+
+        if (role.id === userData.activeRole.id) return console.log('i am already in roleing');
+
+        const res = await axiosSecure.put(`/user/me/${userData.email}`, role);
+        console.log(res.data);
+    }
+
     return (
         <div className="flex flex-col items-center">
             <h5>{userData?.name}</h5>
@@ -23,7 +20,14 @@ const Profile = () => {
             <img src={userData?.image} width={500} height={500} />
 
             {
-                userData?.responsibility?.map((single, idx) => <button className="btn" key={idx}>{single.position}</button>)
+                userData?.responsibility.map((role, idx) =>
+                    <button
+                        onClick={() => handleCng(role)}
+                        className="btn"
+                        key={idx}
+                    >{role.position}
+                    </button>
+                )
             }
 
         </div>

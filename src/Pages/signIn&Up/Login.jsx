@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import useAuth from "../../usehook/useAuth";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
@@ -10,8 +10,9 @@ const Login = () => {
     const queryClient = useQueryClient();
     const axiosPublic = useAxiosPublic();
     const { login, logOut } = useAuth();
-    const Toast = Alert();
     const [show, setShow] = useState(true);
+    const navigate = useNavigate()
+    const Toast = Alert();
     const handleSubmit = async (e) => {
         e.preventDefault();
         const form = e.target;
@@ -38,6 +39,7 @@ const Login = () => {
         login(email, password)
             .then((result) => {
                 console.log(result);
+                navigate('/')
                 if (!result.user.emailVerified) {
                     // TODO: i have to uncomment this for email verification
                     // logOut()
