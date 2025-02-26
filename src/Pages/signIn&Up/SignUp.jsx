@@ -28,8 +28,6 @@ const SignUp = () => {
         }
     })
 
-    console.log(ward);
-
     const [image, setImage] = useState(null);
     const [imgText, setImgText] = useState('আপনার ছবি সিলেক্ট করুন।')
     const imageRef = useRef(null);
@@ -84,10 +82,33 @@ const SignUp = () => {
 
         setErr('');
         // console.log(name, email, phone, level, thana, ward, unit, responsibility);
-
-        console.log(image);
         if (!image) return setErr('দয়া করে আপনি আপনার একটি ইমেজ প্রদান করুন')
         if (phone.length !== 11) return setErr('দয়া করে একটি ভ্যালিড মোবাইল নাম্বার প্রদান করুন')
+
+        let activeRole;
+
+        for (let i = 0; i < responsibility.length; i++) {
+            const role = responsibility[i];
+
+            if (i === 0) activeRole = role;
+
+            if (role.area === 'ওয়ার্ড' && ward === 'প্রযোজ্য নয়') {
+                setErr('ওয়ার্ডের নাম প্রদান করুন');
+                return
+            }
+            else if (role.area === 'উপশাখা' && unit === 'প্রযোজ্য নয়') {
+                setErr('ইউনিটের নাম প্রদান করুন');
+                return
+            }
+        }
+
+        if (activeRole.area === 'থানা') activeRole = { areaName: thana, ...activeRole }
+        else if (activeRole.area === 'ওয়ার্ড') activeRole = { areaName: ward, ...activeRole }
+        else if (activeRole.area === 'উপশাখা') activeRole = { areaName: unit, ...activeRole }
+
+
+        formData.append('activeRole', JSON.stringify(activeRole))
+        console.log(activeRole);
 
         // for (let pair of formData.entries()) {
         //     console.log(pair[0] + ': ' + pair[1]);
@@ -99,17 +120,38 @@ const SignUp = () => {
             }
         })
             .then(res => {
-                console.log(res.data?.error?.message)
-                res.data.status === 200 && Toast.fire({ icon: 'success', title: 'আপনার রিকুয়েস্ট গ্রহণ করা হয়েছে। কনফারমেশন ইমেইল আর জন্য অপেক্ষা করুন।' }) && navigate('/')
-                res.data.status === 500 && Toast.fire({ icon: 'error', title: 'আপনার রিকুয়েস্ট গ্রহণ করা হয়নি। আপনার দেয়া ইমেইল আগেই ব্যবহৃত হয়েছে।' }) && navigate('/')
-                res.data.status === 501 && Toast.fire({
-                    icon: 'error',
-                    title: `${res.data.error.message.includes('Stale request') ? 'আপনার ডিভাইসের সময় ঠিক করুন।' : 'কোন সমস্যা হয়েছে। দয়া করে পুনরায় চেষ্টা করুন।'}`
-                })
-
+                console.log(res.data.status);
+                Toast.fire({ icon: 'success', title: 'আপনার রিকুয়েস্ট গ্রহণ করা হয়েছে। কনফারমেশন ইমেইল আর জন্য অপেক্ষা করুন।' })
+                    && navigate('/')
+            })
+            .catch(err => {
+                if (err.status === 502) {
+                    Toast.fire({ icon: 'error', title: 'আপনার রিকুয়েস্ট গ্রহণ করা হয়নি। আপনার দেয়া ইমেইল পূর্বেই ব্যবহৃত হয়েছে।' })
+                }
+                else if (err.status === 501) {
+                    console.log(err.response.data.message);
+                    Toast.fire({
+                        icon: 'error',
+                        title: `${err.response.data.message.includes('Stale request') ? 'আপনার ডিভাইসের সময় ঠিক করুন।' : 'কোন সমস্যা হয়েছে। দয়া করে পুনরায় চেষ্টা করুন।'}`
+                    })
+                }
+                else {
+                    Toast.fire({ icon: 'error', title: 'আপনার রিকুয়েস্ট গ্রহণ করা হয়নি। An unknown error occurred' })
+                }
             })
 
     }
+
+    /**
+     *console.log(res.data?.error?.message)
+                res.data.status === 200 && Toast.fire({ icon: 'success', title: 'আপনার রিকুয়েস্ট গ্রহণ করা হয়েছে। কনফারমেশন ইমেইল আর জন্য অপেক্ষা করুন।' }) && navigate('/')
+ && navigate('/')
+                res.data.status === 501 && Toast.fire({
+                    icon: 'error',
+                    title: `${res.data.error.message.includes('Stale request') ? 'আপনার ডিভাইসের সময় ঠিক করুন।' : 'কোন সমস্যা হয়েছে। দয়া করে পুনরায় চেষ্টা করুন।'}`
+                }) 
+     * 
+    */
 
 
     // if (isLoading || unitLoading) return <p>loading ...</p>

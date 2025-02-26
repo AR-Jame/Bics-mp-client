@@ -9,17 +9,46 @@ import dashboard from '../../assets/dashboard.png';
 import discussion from '../../assets/discussion.png';
 import req from '../../assets/add-user.png'
 import { NavLink } from 'react-router-dom';
+import useUserContext from '../../usehook/useUserContext';
 
-const Menus = [
-    { title: "সকল জনশক্তি", src: group, to: '/dashboard/manpower' },
-    { title: "সকল শুভাকাঙ্ক্ষী", src: wisher, to: '/dashboard/wisher' },
-    { title: "ওয়ার্ড & উপশাখা", src: dashboard, to: '/dashboard/ward-unit' },
-    { title: "সকল প্রোগ্রাম", src: discussion },
-    { title: "রিকুয়েস্টস", src: req, to: '/dashboard/request' },
-];
+let ThanaMenus;
+let WardMenus;
+let UnitMenus;
 
-const ThanaNav = ({ open, setOpen }) => {
+const SideNav = ({ open, setOpen }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+    const { userData } = useUserContext();
+
+
+    ThanaMenus = [
+        { title: "সকল জনশক্তি", src: group, to: '/dashboard/manpower', },
+        { title: "সকল শুভাকাঙ্ক্ষী", src: wisher, to: '/dashboard/wisher', },
+        { title: "ওয়ার্ড & উপশাখা", src: dashboard, to: '/dashboard/ward-unit', },
+        { title: "সকল প্রোগ্রাম", src: discussion },
+        { title: "রিকুয়েস্টস", src: req, to: '/dashboard/request' },
+    ];
+    WardMenus = [
+        { title: "সকল জনশক্তি", src: group, to: '/dashboard/ward-manpower' },
+        { title: "সকল শুভাকাঙ্ক্ষী", src: wisher, to: '/dashboard/wisher' },
+        { title: "সকল উপশাখা", src: dashboard, to: '/dashboard/ward-unit' },
+        { title: "সকল প্রোগ্রাম", src: discussion },
+    ];
+    UnitMenus = [
+        { title: "সকল জনশক্তি", src: group, to: '/dashboard/manpower' },
+        { title: "সকল শুভাকাঙ্ক্ষী", src: wisher, to: '/dashboard/wisher' },
+        { title: "সকল প্রোগ্রাম", src: discussion },
+    ];
+
+
+
+
+
+    let Menus;
+
+    if (userData?.activeRole?.area === 'থানা') Menus = ThanaMenus
+    else if (userData?.activeRole?.area === 'ওয়ার্ড') Menus = WardMenus
+    else if (userData?.activeRole?.area === 'উপশাখা') Menus = UnitMenus
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -42,9 +71,9 @@ const ThanaNav = ({ open, setOpen }) => {
                         <img src={logo} className={`cursor-pointer max-w-14 mx-auto ${open ? '' : 'pr-2'}`} />
                     </div>
                 </NavLink>
-                
+
                 <ul className="pt-6">
-                    {Menus.map((Menu, index) => (
+                    {Menus?.map((Menu, index) => (
                         <NavLink to={Menu.to} key={index}>
                             <li className="flex items-center gap-x-4 p-2 rounded-md cursor-pointer hover:bg-[#f7b8bc2d] text-black text-sm mt-2">
                                 <img src={Menu.src} className="w-6" />
@@ -70,9 +99,9 @@ const ThanaNav = ({ open, setOpen }) => {
     );
 };
 
-ThanaNav.propTypes = {
+SideNav.propTypes = {
     open: PropTypes.bool,
     setOpen: PropTypes.func
 };
 
-export default ThanaNav;
+export default SideNav;

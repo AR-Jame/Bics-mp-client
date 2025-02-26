@@ -82,7 +82,7 @@ const AcceptReq = () => {
                     <div className="input-data">
                         <input name='email' type="email" required />
                         <div className="underline"></div>
-                        <label>আপনার ইমেইল অ্যাড্রেস</label>
+                        <label>আপনার ইমেইল অ্যাড্রেস <sup className="text-xs text-[#2e2e2ed3]">(যেটি রেজিস্ট্রেশনে ব্যবহার করেছেন।)</sup></label>
                     </div>
                     <div className="input-data relative">
                         <input name='password' type={show ? 'password' : 'text'} required />

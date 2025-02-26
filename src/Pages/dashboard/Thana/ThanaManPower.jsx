@@ -1,15 +1,17 @@
 import { useState } from "react";
 import GetManPower from "./GetManPower";
+import useUserContext from "../../../usehook/useUserContext";
 
 
 const tabs = [
-    { id: "tab1", label: "সদস্য", query: 'no1' },
-    { id: "tab2", label: "সাথী", query: 'no2' },
-    { id: "tab3", label: "কর্মী", query: 'no3' }
+    { id: "tab1", label: "সদস্য", query: 'সদস্য' },
+    { id: "tab2", label: "সাথী", query: 'সাথী' },
+    { id: "tab3", label: "কর্মী", query: 'কর্মী' }
 ];
 
 export default function Tabs() {
     const [activeTab, setActiveTab] = useState("tab1");
+    const { userData } = useUserContext();
 
     return (
         <div className="w-full mx-auto p-5">
@@ -29,7 +31,11 @@ export default function Tabs() {
             {/* Tabs Content */}
             <div className="bg-white text-gray-800">
                 <div className="bg-white text-gray-800">
-                    <GetManPower query={tabs.find(tab => tab.id === activeTab).query} />
+                    <GetManPower
+                        query={tabs.find(tab => tab.id === activeTab).query}
+                        area={userData?.activeRole.area}
+                        areaName={userData?.activeRole.areaName}
+                    />
                 </div>
             </div>
         </div>

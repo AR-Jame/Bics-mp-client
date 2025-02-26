@@ -2,6 +2,7 @@ import { lazy } from 'react';
 import Root from './Root';
 import { createBrowserRouter } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute/PrivateRoute';
+import UserProvider from '../usehook/UserProvider';
 
 const Login = lazy(() => import('../Pages/signIn&Up/Login'))
 const SignUp = lazy(() => import('../Pages/signIn&Up/SignUp'))
@@ -18,6 +19,7 @@ const CreateWard = lazy(() => import('../Pages/dashboard/Thana/CreateWard'))
 const CreateUnit = lazy(() => import('../Pages/dashboard/Thana/CreateUnit'))
 const Profile = lazy(() => import('../Pages/Profile/Profile'))
 const Home = lazy(() => import('../Pages/Home/Home'))
+const WardManPower = lazy(() => import('../Pages/dashboard/Ward/WardManPower'))
 
 
 const router = createBrowserRouter([
@@ -32,8 +34,9 @@ const router = createBrowserRouter([
             { path: '/profile', element: <Profile /> },
             {
                 path: '/dashboard',
-                element: <PrivateRoute><Dashboard /></PrivateRoute>,
+                element: <UserProvider><PrivateRoute><Dashboard /></PrivateRoute></UserProvider>,
                 children: [
+                    // thana dashboard
                     { path: 'manpower', element: <PrivateRoute><ThanaManPower /></PrivateRoute> },
                     { path: 'wisher', element: <Wisher /> },
                     { path: 'request', element: <Requests /> },
@@ -43,6 +46,9 @@ const router = createBrowserRouter([
                     { path: 'ward-unit', element: <WardnUnit /> },
                     { path: 'create-ward', element: <CreateWard /> },
                     { path: 'create-unit', element: <CreateUnit /> },
+
+                    // ward dashboard
+                    { path: 'ward-manpower', element: <WardManPower /> }
                 ],
             },
         ],

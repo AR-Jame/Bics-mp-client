@@ -1,16 +1,37 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../usehook/useAxiosSecure";
 import useUser from "../../usehook/useUser";
 
 const Profile = () => {
     const axiosSecure = useAxiosSecure();
-    const userData = useUser();
+    const queryClient = useQueryClient()
+
+    const { userData } = useUser();
+
+
+    const { mutate } = useMutation({
+        mutationFn: async (role) => {
+            const res = await axiosSecure.put(`/user/me/${userData?.email}`, role)
+            return res.data
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(['profile', userData?.email]);
+        },
+        onError: (err) => {
+            console.log(err);
+        }
+    })
+
+    console.log(userData?.activeRole);
 
     const handleCng = async (role) => {
+        if (role.id === userData?.activeRole.id) return console.log('i am already in roleing');
 
-        if (role.id === userData.activeRole.id) return console.log('i am already in roleing');
+        if (role.area === 'থানা') role = { ...role, areaName: userData?.thana }
+        else if (role.area === 'ওয়ার্ড') role = { ...role, areaName: userData?.ward }
+        else if (role.area === 'উপশাখা') role = { ...role, areaName: userData?.unit }
 
-        const res = await axiosSecure.put(`/user/me/${userData.email}`, role);
-        console.log(res.data);
+        mutate(role)
     }
 
     return (
