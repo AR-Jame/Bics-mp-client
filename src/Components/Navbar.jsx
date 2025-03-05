@@ -5,15 +5,22 @@ import 'react-modern-drawer/dist/index.css'
 import { NavLink } from "react-router-dom";
 import useAuth from "../usehook/useAuth";
 import { Menu } from "lucide-react";
+import useUser from "../usehook/useUser";
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
+    const { userData } = useUser();
     const [isOpen, setIsOpen] = useState(false)
 
     const toggleDrawer = () => {
         setIsOpen((prevState) => !prevState)
     }
     console.log(user);
+
+    let redirectUrl;
+
+    if (userData?.activeRole?.area === 'থানা') redirectUrl = '/dashboard/manpower'
+    else if (userData?.activeRole?.area === 'ওয়ার্ড' || userData?.activeRole?.area === 'উপশাখা') redirectUrl = '/dashboard/ward-unit-manpower'
 
     const lgLiClass = 'hover:bg-[#f1f1ef] text-lg font-medium active:text-[#FD9810] cursor-pointer px-3 py-3 rounded-md transition-bg'
     const smLiClass = 'w-[250px] active:text-[#FD9810] text-center hover:bg-[#f1f1ef] py-2 transition-all cursor-pointer text-xl font-medium'
@@ -30,7 +37,7 @@ const Navbar = () => {
                         user && user.email ?
 
                             <>
-                                <NavLink to='/dashboard/manpower'><li className={lgLiClass}>ড্যাশবোর্ড</li></NavLink>
+                                <NavLink to={redirectUrl}><li className={lgLiClass}>ড্যাশবোর্ড</li></NavLink>
                                 <NavLink to='/post'><li className={lgLiClass}>পোস্ট</li></NavLink>
                                 <NavLink to='/profile'><img src={user.photoURL} width={50} height={50} className="rounded-full" /></NavLink>
                                 <button onClick={logOut} className="btn">logOut</button>

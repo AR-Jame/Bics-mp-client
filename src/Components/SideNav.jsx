@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 
-import logo from '../../assets/shibir.png';
-import control from '../../assets/control.png';
-import wisher from '../../assets/wish-list.png';
-import group from '../../assets/group.png';
-import dashboard from '../../assets/dashboard.png';
-import discussion from '../../assets/discussion.png';
-import req from '../../assets/add-user.png'
+import logo from '../assets/shibir.png';
+import control from '../assets/control.png';
+import wisher from '../assets/wish-list.png';
+import group from '../assets/group.png';
+import dashboard from '../assets/dashboard.png';
+import discussion from '../assets/discussion.png';
+import req from '../assets/add-user.png'
 import { NavLink } from 'react-router-dom';
-import useUserContext from '../../usehook/useUserContext';
+import useUserContext from '../usehook/useUserContext';
 
 let ThanaMenus;
 let WardMenus;
@@ -25,19 +25,19 @@ const SideNav = ({ open, setOpen }) => {
         { title: "সকল জনশক্তি", src: group, to: '/dashboard/manpower', },
         { title: "সকল শুভাকাঙ্ক্ষী", src: wisher, to: '/dashboard/wisher', },
         { title: "ওয়ার্ড & উপশাখা", src: dashboard, to: '/dashboard/ward-unit', },
-        { title: "সকল প্রোগ্রাম", src: discussion },
+        { title: "সকল প্রোগ্রাম", src: discussion, to: '/dashboard/programs' },
         { title: "রিকুয়েস্টস", src: req, to: '/dashboard/request' },
     ];
     WardMenus = [
-        { title: "সকল জনশক্তি", src: group, to: '/dashboard/ward-manpower' },
+        { title: "সকল জনশক্তি", src: group, to: '/dashboard/ward-unit-manpower' },
         { title: "সকল শুভাকাঙ্ক্ষী", src: wisher, to: '/dashboard/wisher' },
-        { title: "সকল উপশাখা", src: dashboard, to: '/dashboard/ward-unit' },
-        { title: "সকল প্রোগ্রাম", src: discussion },
+        { title: "সকল উপশাখা", src: dashboard, to: '/dashboard/unit-list' },
+        { title: "সকল প্রোগ্রাম", src: discussion, to: '/dashboard/programs' },
     ];
     UnitMenus = [
-        { title: "সকল জনশক্তি", src: group, to: '/dashboard/manpower' },
+        { title: "সকল জনশক্তি", src: group, to: '/dashboard/ward-unit-manpower' },
         { title: "সকল শুভাকাঙ্ক্ষী", src: wisher, to: '/dashboard/wisher' },
-        { title: "সকল প্রোগ্রাম", src: discussion },
+        { title: "সকল প্রোগ্রাম", src: discussion, to: '/dashboard/programs' },
     ];
 
 

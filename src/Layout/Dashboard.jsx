@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import SideNav from "../Components/sideNav/SideNav";
+import SideNav from "../Components/SideNav";
 import { Suspense, useState } from "react";
 import useUserContext from "../usehook/useUserContext";
 

@@ -1,5 +1,5 @@
 import useUserContext from "../../../usehook/useUserContext";
-import GetManPower from "../Thana/GetManPower";
+import GetManPower from "../../CommonPages/GetManPower";
 
 const WardManPower = () => {
     const { userData } = useUserContext();

@@ -1,18 +1,21 @@
-import ManPowerCard from "../../../Components/ManPowerCard";
+import ManPowerCard from "../../Components/ManPowerCard";
 import PropTypes from "prop-types";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../../usehook/useAxiosSecure";
+import useAxiosSecure from "../../usehook/useAxiosSecure";
 
 
 const GetManPower = ({ query, areaName, area }) => {
     const axiosSecure = useAxiosSecure();
     console.log(query);
     const { data = [], isLoading } = useQuery({
-        queryKey: ['user', query],
+        queryKey: ['user', areaName, query],
         queryFn: async () => {
             const res = await axiosSecure.get(`/user?level=${query}&area=${area}&areaName=${areaName}`)
             return res.data;
-        }
+        },
+        refetchOnWindowFocus: false,
+        cacheTime: 600000,
+        staleTime: 300000,
     })
     console.log(data);
 

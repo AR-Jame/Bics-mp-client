@@ -1,18 +1,20 @@
-import useAxiosPublic from "../../../usehook/useAxiosPublic";
-import WisherCard from "../../../Components/WisherCard";
+import useAxiosPublic from "../../usehook/useAxiosPublic";
+import WisherCard from "../../Components/WisherCard";
 import { NavLink } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import useUserContext from "../../usehook/useUserContext";
 
 const Wisher = () => {
     const axiosPublic = useAxiosPublic();
+    const { userData } = useUserContext();
 
     const { data = [], isLoading } = useQuery({
         queryKey: ['wisher'],
         queryFn: async () => {
-            const res = await axiosPublic.get('/wisher')
+            const res = await axiosPublic.get(`/wisher?area=${userData.activeRole.area}&areaName=${userData.activeRole.areaName}`)
             return res.data
         }
-    })
+    });
 
     if (isLoading) return <p>loading......</p>
 

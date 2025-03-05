@@ -1,6 +1,6 @@
 import { useState } from "react";
-import GetManPower from "./GetManPower";
 import useUserContext from "../../../usehook/useUserContext";
+import GetManPower from "../../CommonPages/GetManPower";
 
 
 const tabs = [

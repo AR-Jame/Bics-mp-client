@@ -6,8 +6,7 @@ export const UserContext = createContext(null);
 
 const UserProvider = ({ children }) => {
     const { userData } = useUser()
-    console.log(userData, 'from provider');
-    const userInfo = { userData, test: 'i am for testing' }
+    const userInfo = { userData }
     return (
         <UserContext value={userInfo}>
             {children}

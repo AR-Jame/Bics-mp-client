@@ -4,7 +4,7 @@ import useAxiosPublic from '../../../usehook/useAxiosPublic';
 import WardCard from '../../../Components/WardCard';
 import UnitCard from '../../../Components/UnitCard';
 
-const GetWardnUnit = ({ query }) => {
+const GetWardnUnit = ({ query}) => {
     const axiosPublic = useAxiosPublic();
     const { data = [] } = useQuery({
         queryKey: [query],
@@ -26,7 +26,9 @@ const GetWardnUnit = ({ query }) => {
 };
 
 GetWardnUnit.propTypes = {
-    query: PropTypes.string
+    query: PropTypes.string,
+    area: PropTypes.string,
+    areaName: PropTypes.string,
 };
 
 export default GetWardnUnit;

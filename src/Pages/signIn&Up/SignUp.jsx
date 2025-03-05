@@ -3,30 +3,18 @@ import { useRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import useAxiosPublic from '../../usehook/useAxiosPublic';
 import sweet from '../../Components/Toast';
-import { useQuery } from '@tanstack/react-query';
+import useWard from '../../usehook/useWard';
+import useUnit from '../../usehook/useUnit';
 const SignUp = () => {
     const navigate = useNavigate();
     const axiosPublic = useAxiosPublic();
     const [err, setErr] = useState('');
+    const [ward, setWard] = useState(null)
+
     const Toast = sweet();
+    const wards = useWard();
+    const units = useUnit(ward);
 
-
-    const [ward, setWard] = useState('')
-
-    const { data: units = [] } = useQuery({
-        queryKey: ['unit', ward],
-        queryFn: async () => {
-            const res = await axiosPublic.get(`/wardnunit/unit?ward=${ward}`)
-            return res.data
-        }
-    })
-    const { data: wards = [] } = useQuery({
-        queryKey: ['ward'],
-        queryFn: async () => {
-            const res = await axiosPublic.get('/wardnunit/ward')
-            return res.data
-        }
-    })
 
     const [image, setImage] = useState(null);
     const [imgText, setImgText] = useState('আপনার ছবি সিলেক্ট করুন।')
@@ -141,20 +129,6 @@ const SignUp = () => {
             })
 
     }
-
-    /**
-     *console.log(res.data?.error?.message)
-                res.data.status === 200 && Toast.fire({ icon: 'success', title: 'আপনার রিকুয়েস্ট গ্রহণ করা হয়েছে। কনফারমেশন ইমেইল আর জন্য অপেক্ষা করুন।' }) && navigate('/')
- && navigate('/')
-                res.data.status === 501 && Toast.fire({
-                    icon: 'error',
-                    title: `${res.data.error.message.includes('Stale request') ? 'আপনার ডিভাইসের সময় ঠিক করুন।' : 'কোন সমস্যা হয়েছে। দয়া করে পুনরায় চেষ্টা করুন।'}`
-                }) 
-     * 
-    */
-
-
-    // if (isLoading || unitLoading) return <p>loading ...</p>
 
     return (
         <>

@@ -1,15 +1,23 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import useAxiosPublic from "../../../usehook/useAxiosPublic";
+import useAxiosSecure from "../../usehook/useAxiosSecure";
+import useWard from "../../usehook/useWard";
+import { useState } from "react";
+import useUnit from "../../usehook/useUnit";
 
 const AddWisher = () => {
 
-    const axiosPublic = useAxiosPublic();
+    const axiosSecure = useAxiosSecure()
     const queryClient = useQueryClient()
+    const [ward, setWard] = useState(null);
+    const [err, setErr] = useState('');
+    const wards = useWard();
+    console.log(ward);
+    const units = useUnit(ward);
 
     const { mutate } = useMutation({
         mutationFn: async (wisher) => {
             console.log('wisher is ', wisher);
-            const res = axiosPublic.post('/wisher', wisher)
+            const res = axiosSecure.post('/wisher', wisher)
             return res.data
         },
         onSuccess: () => {
@@ -27,6 +35,11 @@ const AddWisher = () => {
         const thana = form.thana.value;
         const ward = form.ward.value;
         const unit = form.unit.value;
+
+        setErr('')
+
+        // TODO: i have to check the phone number
+        // if(phone.length !== 11) return setErr('দয়া করে একটি ভ্যালিড নাম্বার প্রদান করুন।')
 
         // inserting current payment
         const currentMonth = new Date().toISOString().slice(0, 7);
@@ -66,24 +79,27 @@ const AddWisher = () => {
                         <div className="underline"></div>
                         <label>এয়ানতের পরিমান লিখুন</label>
                     </div>
+                    <select required name='thana' className='w-full border rounded-xl py-3 px-1'>
+                        <option value="" hidden>থানার নাম</option>
+                        <option value="মাতুয়াইল পূর্ব">মাতুয়াইল পূর্ব</option>
+                    </select>
                     <div className='flex flex-col lg:flex-row gap-2 my-5 '>
-                        <select required name='thana' className='w-full border rounded-xl py-3 px-1'>
-                            <option value="" hidden>থানার নাম</option>
-                            <option value="মাতুয়াইল পূর্ব">মাতুয়াইল পূর্ব</option>
-                        </select>
-                        <select required name='ward' className='w-full border rounded-xl py-3 px-1'>
+                        <select required name='ward' onClick={(e) => setWard(e.target.value)} className='w-full border rounded-xl py-3 px-1'>
                             <option value="" hidden>ওয়ার্ডের নাম</option>
-                            <option value="সদস্য">সদস্য</option>
-                            <option value="সাথী">সাথী</option>
-                            <option value="">প্রযোজ্য নয়</option>
+                            {
+                                wards.map(ward => <option key={ward._id}>{ward.ward}</option>)
+                            }
+                            <option value="প্রযোজ্য নয়">প্রযোজ্য নয়</option>
                         </select>
                         <select required name='unit' className='w-full border rounded-xl py-3 px-1'>
                             <option value="" hidden>উপশাখার নাম</option>
-                            <option value="সদস্য">সদস্য</option>
-                            <option value="সাথী">সাথী</option>
+                            {
+                                units.map(unit => <option key={unit._id}>{unit.unit}</option>)
+                            }
                             <option value="কর্মী">প্রযোজ্য নয়</option>
                         </select>
                     </div>
+                    {err && <p className="text-red-500">{err}</p>}
                 </div>
                 <div className='text-center'>
                     <button

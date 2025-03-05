@@ -4,8 +4,7 @@ import { Navigate } from 'react-router-dom';
 import useUserContext from '../../usehook/useUserContext';
 
 const PrivateRoute = ({ children }) => {
-    const { userData, userLoading } = useUserContext();
-    console.log(userData);
+    const { userLoading } = useUserContext();
     const { user, loading } = useAuth();
     if (loading || userLoading) return <p>loading ....</p>
 
