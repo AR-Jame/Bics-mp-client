@@ -8,8 +8,8 @@ const Root = () => {
     const location = useLocation()
     return (
         <>
-            {!location.pathname.includes('dashboard') && <Navbar />}
-            <Suspense fallback={<h1>loading</h1>}>
+            <Navbar />
+            <Suspense fallback={<p>loading</p>}>
                 <Outlet />
             </Suspense>
             {!location.pathname.includes('dashboard') && <Footer />}

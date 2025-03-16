@@ -1,14 +1,13 @@
-import logo from '../assets/shibir.png'
 const Footer = () => {
     return (
         <footer className="bg-[#1b1b1b] flex flex-col lg:flex-row lg:justify-around lg:items-center text-white mt-48 pt-20 lg:px-[10%] px-[5%] p-10 hind">
             <aside className='hind'>
-                <img src={logo} className='w-36' />
-                <p className='text-xl'>
+                <img width={150} height={150} src='https://res.cloudinary.com/dypz844df/image/upload/v1741681175/shibir_dyk2zy.png' className='w-36' />
+                <h2 className='text-xl'>
                     বাংলাদেশ ইসলামি ছাত্রশিবির
                     <br />
                     ঢাকা মহানগর দক্ষিণ, মাতুয়াইল পূর্ব থানা
-                </p>
+                </h2>
             </aside>
             <nav className='flex flex-col'>
                 <h6 className="footer-title">ফেসবুক লিংকস</h6>

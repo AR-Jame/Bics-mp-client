@@ -18,7 +18,7 @@ const Counter = () => {
     ]
     return (
         <section className="mahin text-center lg:mx-[10%] mx-[5%]">
-            <p className='mahin text-7xl text-center mb-20'>শিবির, অতীত ও বর্তমান </p>
+            <h1 className='mahin text-7xl text-center mb-20'>শিবির, অতীত ও বর্তমান </h1>
             <div className="flex flex-col lg:flex-row justify-around items-center gap-8 rounded-xl bg-[#faa38138] p-20">
                 {
                     data.map((single, idx) =>

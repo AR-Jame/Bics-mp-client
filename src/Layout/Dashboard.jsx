@@ -17,7 +17,7 @@ const Dashboard = () => {
                 <SideNav open={open} setOpen={setOpen} />
             </div>
             <div className="flex-1">
-                <Suspense fallback={<h1>loading.......</h1>}>
+                <Suspense fallback={<p>loading.......</p>}>
                     <Outlet />
                 </Suspense>
             </div>

@@ -42,7 +42,7 @@
   z-index: 100;
   translate: -50% -50%;
   z-index: -1;
-  padding: 5px;
+  padding: 8px;
   border-radius: 5px;
   box-sizing: content-box;
   animation: 3s spin linear infinite;
@@ -57,7 +57,7 @@
 
 .leaderPic::before {
   filter: blur(2rem);
-  opacity: .5;
+  opacity: .8;
 }
 
 @keyframes spin {

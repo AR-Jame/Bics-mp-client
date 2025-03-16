@@ -23,7 +23,7 @@ const ReqCard = ({ data }) => {
     })
     return (
         <div>
-            <h1 className='text-2xl'>{data.name}</h1>
+            <p className='text-2xl'>{data.name}</p>
             <img width={200} src={data.image} />
             <button onClick={() => mutate('accept')} className='btn btn-success mr-2 text-white'>Accept </button>
             <button onClick={() => mutate('decline')} className='btn btn-error text-white'>Decline</button>

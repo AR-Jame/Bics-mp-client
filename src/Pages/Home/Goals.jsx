@@ -1,10 +1,14 @@
-import sideImg from '../../assets/sideImage.png'
-
 const Goals = () => {
     return (
         <div className='flex flex-col lg:flex-row items-center justify-center lg:mx-[10%] mx-[5%] text-center'>
             <div className=''>
-                <img src={sideImg} />
+                <img
+                    width={634}
+                    height={734}
+                    src='https://res.cloudinary.com/dypz844df/image/upload/v1741680470/sideImage_uwkyz3.webp'
+                    srcSet="https://res.cloudinary.com/dypz844df/image/upload/v1741691861/sideImage_400_zwhhrg.webp 600w, https://res.cloudinary.com/dypz844df/image/upload/v1741680470/sideImage_uwkyz3.webp, 1700w"
+                    sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
             </div>
             <div>
                 <h2 className="mahin lg:text-7xl text-4xl mb-8">আমাদের লক্ষ্য ও উদ্দেশ্য</h2>

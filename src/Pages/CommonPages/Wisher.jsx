@@ -7,11 +7,12 @@ import useUserContext from "../../usehook/useUserContext";
 const Wisher = () => {
     const axiosPublic = useAxiosPublic();
     const { userData } = useUserContext();
+    const { area, areaName } = userData.activeRole;
 
     const { data = [], isLoading } = useQuery({
         queryKey: ['wisher'],
         queryFn: async () => {
-            const res = await axiosPublic.get(`/wisher?area=${userData.activeRole.area}&areaName=${userData.activeRole.areaName}`)
+            const res = await axiosPublic.get(`/wisher?area=${area}&areaName=${areaName}`)
             return res.data
         }
     });

@@ -1,9 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@plugin "daisyui";
+
+@layer base {
+  * {
+    border-color: #e5e7eb;
+    /* Tailwind v3 default border color */
+  }
+}
 
 @font-face {
   font-family: 'mahin';
-  src: url("https://res.cloudinary.com/dypz844df/raw/upload/v1740501761/mahin_fv1wat.ttf");
+  src: url("https://res.cloudinary.com/dypz844df/raw/upload/v1741687949/mahin_fv1wat_pfrbqc.woff2") format('woff2');
+  font-display: swap;
 }

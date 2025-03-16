@@ -239,13 +239,13 @@ const SignUp = () => {
                                                 </select>
                                                 {
                                                     inputs.length !== 1 &&
-                                                    <button type='button' onClick={() => handleDeleteOpt(input.id)}><Trash2 color='white' className='bg-red-500 rounded-lg p-2 box-content' /></button>
+                                                    <button type='button' className='cursor-pointer' onClick={() => handleDeleteOpt(input.id)}><Trash2 color='white' className='bg-red-500 rounded-lg p-2 box-content' /></button>
                                                 }
                                             </div>
                                         )
                                     }
                                     <div className='flex justify-end'>
-                                        <button type='button' onClick={handleAddOpt} className='flex gap-2 justify-center mr-0 text-sm  px-4 border-2 border-cyan-300 py-2 rounded-lg'><Plus size={20} /> একাধিক দায়িত্ব</button>
+                                        <button type='button' onClick={handleAddOpt} className='flex gap-2 justify-center mr-0 cursor-pointer text-sm  px-4 border-2 border-cyan-300 py-2 rounded-lg'><Plus size={20} /> একাধিক দায়িত্ব</button>
                                     </div>
                                 </div>
                             </div>

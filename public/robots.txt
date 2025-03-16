@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://bics-mp.web.app/sitemap.xml

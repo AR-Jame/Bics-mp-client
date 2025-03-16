@@ -17,7 +17,7 @@ const WisherDetails = () => {
     if (isLoading) return <p>loading....</p>
     return (
         <div>
-            <h1 className="text-4xl">{data.name}</h1>
+            <p className="text-4xl">{data.name}</p>
             <NavLink to={`/dashboard/update-wisher/${data._id}`}>
                 <button className="btn">Update {data.name}</button>
             </NavLink>
