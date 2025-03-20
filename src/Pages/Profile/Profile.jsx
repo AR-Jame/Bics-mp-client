@@ -5,6 +5,8 @@ import useAuth from "../../usehook/useAuth";
 import edit from '../../assets/editicon.png';
 import { useState } from "react";
 import UpdateProfile from "./UpdateProfile";
+import { SquarePen } from 'lucide-react';
+import Swal from "sweetalert2";
 
 
 const Profile = () => {
@@ -29,21 +31,40 @@ const Profile = () => {
         }
     })
 
-    console.log(userData?.activeRole);
+    console.log(userData);
 
-    const handleCng = async (role) => {
-        if (role.id === userData?.activeRole.id) return console.log('i am already in roleing');
+    const inputOptions = {};
 
-        if (role.area === 'থানা') role = { ...role, areaName: userData?.thana }
-        else if (role.area === 'ওয়ার্ড') role = { ...role, areaName: userData?.ward }
-        else if (role.area === 'উপশাখা') role = { ...role, areaName: userData?.unit }
+    userData?.responsibility.forEach(role => {
+        inputOptions[role.id] = role.area + " " + role.position
+    })
 
-        mutate(role)
+
+    const handleSwal = async () => {
+        await Swal.fire({
+            title: "দায়িত্ব সিলেক্ট করুন",
+            input: "select",
+            inputOptions: inputOptions,
+            inputPlaceholder: "একটি দায়িত্ব সিলেক্ট করুন",
+            showCancelButton: true,
+            inputValidator: (role) => {
+                console.log(role);
+                if (role === userData?.activeRole.id) return console.log('i am already in roleing');
+                let selected = userData?.responsibility?.find(single => single.id === parseFloat(role))
+                console.log(selected);
+                if (selected.area === 'থানা') selected = { ...selected, areaName: userData?.thana }
+                else if (selected.area === 'ওয়ার্ড') selected = { ...selected, areaName: userData?.ward }
+                else if (selected.area === 'উপশাখা') selected = { ...selected, areaName: userData?.unit }
+                mutate(selected)
+            }
+        });
     }
+
+
     const handleUpdateState = () => {
         setUpdateProfile(true)
     }
-
+    console.log(userData);
 
     if (updateProfile) return <UpdateProfile user={user} userData={userData} setUpdateProfile={setUpdateProfile} />
 
@@ -51,22 +72,33 @@ const Profile = () => {
         <div className="hind relative items-center grid grid-cols-1 lg:grid-cols-2 gap-5 mx-[5%] xl:mx-[10%]">
             <div className="space-y-4 mt-5">
                 <div className="bg-[#00b5f11f] rounded-2xl py-8 text-center space-y-7">
-                    <img src={user?.photoURL} alt={userData?.name} width={250} height={250} className="mx-auto shadow-2xl rounded-full" />
+                    <img src={userData?.image} alt={userData?.name} width={250} height={250} className="mx-auto shadow-2xl w-[250px] h-[250px] object-cover object-center rounded-full" />
                     <div className="space-y-3">
                         <h4 className="mahin text-4xl">{userData?.name}</h4>
                         <p className="text-lg font-medium">{userData?.phone}</p>
                         <p className="text-lg">{userData?.email}</p>
-                        <p className="text-lg bg-blue-200 py-2">{userData?.level}</p>
+                        <p className="text-lg bg-blue-200 py-2">মানঃ {userData?.level}</p>
+                        <p
+                            className="text-lg bg-blue-200 py-2 flex justify-center items-center gap-3"
+                        >{userData?.activeRole?.area + " " + userData?.activeRole?.position + ", " + userData?.activeRole?.areaName}
+                            <SquarePen
+                                size={20}
+                                className="cursor-pointer"
+                                onClick={handleSwal}
+                            />
+                        </p>
                     </div>
                 </div>
-                <div className="bg-[#00b5f11f] rounded-2xl py-8 space-y-2 px-4">
+                <div className="bg-[#00b5f11f] text-center rounded-2xl py-8 space-y-2 px-4">
                     <p className="text-lg">শিক্ষাপ্রতিষ্ঠানের নামঃ {userData?.institutionName ? userData?.institutionName : 'দেয়া হয়নি'}</p>
-                    <p>শ্রেণিঃ {userData?.batch ? userData?.batch : 'দেয়া হয়নি'}</p>
-                    <p>বিভাগঃ {userData?.group}</p>
+                    <div className="flex justify-center items-center gap-4">
+                        <p>শ্রেণিঃ {userData?.batch ? userData?.batch : 'দেয়া হয়নি'}</p>
+                        <p>বিভাগঃ {userData?.group}</p>
+                    </div>
                 </div>
             </div>
             <div className="space-y-4 mt-5">
-                <div className="bg-[#00b5f11f] rounded-2xl py-8 px-6 flex flex-col lg:flex-row justify-around">
+                <div className="bg-[#00b5f11f] text-center rounded-2xl py-8 px-6 flex flex-col lg:flex-row justify-around">
                     <div className="flex-1">
                         <p>কর্মী হওয়ার তারিখ </p>
                         <p>{userData?.workerDate}</p>
@@ -81,7 +113,7 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className="flex flex-col lg:flex-row justify-between gap-4">
-                    <div className="bg-[#00b5f11f] rounded-2xl w-full flex flex-col justify-center items-center">
+                    <div className="bg-[#00b5f11f] rounded-2xl w-full flex flex-col justify-center items-center py-6">
                         <p className="text-xl flex gap-3 items-center"><span className="text-[16px]">থানার নামঃ</span> {userData?.thana}</p>
                         <p className="text-xl flex gap-3 items-center"><span className="text-[16px]">ওয়ার্ডের নামঃ</span> {userData?.ward}</p>
                         <p className="text-xl flex gap-3 items-center"><span className="text-[16px]">উপশাখার নামঃ</span> {userData?.unit}</p>

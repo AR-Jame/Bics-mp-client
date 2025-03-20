@@ -21,7 +21,7 @@ const GetManPower = ({ query, areaName, area }) => {
 
     if (isLoading) return <p>Loading ......</p>
     return (
-        <div className="grid grid-cols-3 gap-5">
+        <div className="flex flex-wrap gap-28 mx-[5%] mt-20">
             {
                 data.map(single => <ManPowerCard key={single._id} data={single} />)
             }

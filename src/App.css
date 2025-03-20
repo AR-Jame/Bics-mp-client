@@ -2,13 +2,14 @@
   font-family: 'mahin';
 }
 
-.glass {
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
+/* .glass {
+  background: #D6F2FC;
+  box-shadow: 0 8px 32px 0 rgba(133, 135, 177, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+} */
 
 .hind {
   font-family: "Hind Siliguri", serif;
@@ -70,8 +71,6 @@
   }
 }
 
-
-
 input {
   outline: none;
 }
@@ -88,9 +87,10 @@ input {
   position: relative;
 }
 
-.input-data{
+.input-data {
   margin-bottom: 30px;
 }
+
 .wrapper .input-data input {
   height: 100%;
   width: 100%;

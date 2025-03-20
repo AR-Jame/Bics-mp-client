@@ -1,6 +1,5 @@
 import { useState } from "react";
 import GetWardnUnit from "./GetWardnUnit";
-import { NavLink } from "react-router-dom";
 
 
 const tabs = [
@@ -32,13 +31,6 @@ export default function WardnUnit() {
                     <GetWardnUnit query={tabs.find(tab => tab.id === activeTab).query} />
                 </div>
             </div>
-
-            <NavLink to='/dashboard/create-ward'>
-                <button className="btn">Create new Ward</button>
-            </NavLink>
-            <NavLink to='/dashboard/create-unit'>
-                <button className="btn">Create new unit</button>
-            </NavLink>
         </div>
     );
 }

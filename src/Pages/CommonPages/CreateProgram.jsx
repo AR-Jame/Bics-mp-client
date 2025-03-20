@@ -12,10 +12,11 @@ const CreateProgram = () => {
     const [attendance, setAttendance] = useState({});
     const attendanceKey = Object.keys(attendance)
 
-    console.log(delegates);
-    console.log(attendance);
+    // console.log(delegates);
+    // console.log(attendance);
 
-    const { areaName, area } = userData.activeRole;
+    const areaName = userData?.activeRole?.areaName;
+    const area = userData?.activeRole?.area;
     let { data: allUsers } = useQuery({
         queryKey: ['user', areaName, delegates],
         queryFn: async () => {
@@ -54,7 +55,7 @@ const CreateProgram = () => {
             setAttendance(prev => ({ ...prev, [id]: status }))
         }
         else if (status === 'not') {
-            allUsers = allUsers.filter(user => user._id !== id)
+            setAttendance(prev => ({ ...prev, [id]: status }))
         }
     }
 
@@ -66,12 +67,20 @@ const CreateProgram = () => {
         const time = form.time.value;
         const date = form.date.value;
 
+        let final = {}
+        for (let single in attendance) {
+            console.log(single);
+            if (attendance[single] !== 'not') {
+                final = { ...final, [single]: attendance[single] }
+            }
+        }
 
-        const body = { name, location, time, date, attendance, area, areaName }
+        console.log(final);
+
+        const body = { name, location, time, date, attendance: final, area, areaName }
         mutate({ body, form })
     }
 
-    console.log('loading is', isPending);
     return (
         <div className="flex flex-col justify-center w-full items-center hind min-h-[100vh]">
             <p className="text-2xl pb-3">একটি নতুন প্রোগ্রাম করুন</p>
@@ -130,7 +139,7 @@ const CreateProgram = () => {
                 </div>
                 <div className='text-center'>
                     <button
-                        className={`btn text-center border px-3 py-2 rounded-xl border-[skyblue] hover:bg-[skyblue] hover:border-cyan-300 hover:text-white transition-all`}
+                        className={`btn btn-info text-white`}
                         type='submit'
                         disabled={attendanceKey.length !== allUsers?.length || isPending}
                     >{isPending ? <><span className="loading"></span>loading</> : "সাবমিট করুন"}</button>

@@ -9,7 +9,8 @@ const SignUp = () => {
     const navigate = useNavigate();
     const axiosPublic = useAxiosPublic();
     const [err, setErr] = useState('');
-    const [ward, setWard] = useState(null)
+    const [ward, setWard] = useState(null);
+    const [loading, setLoading] = useState(false)
 
     const Toast = sweet();
     const wards = useWard();
@@ -45,6 +46,7 @@ const SignUp = () => {
 
     const handleRegister = (e) => {
         e.preventDefault();
+        setLoading(true)
         const form = e.target;
 
         const name = form.name.value;
@@ -70,8 +72,14 @@ const SignUp = () => {
 
         setErr('');
         // console.log(name, email, phone, level, thana, ward, unit, responsibility);
-        if (!image) return setErr('দয়া করে আপনি আপনার একটি ইমেজ প্রদান করুন')
-        if (phone.length !== 11) return setErr('দয়া করে একটি ভ্যালিড মোবাইল নাম্বার প্রদান করুন')
+        if (!image) {
+            setLoading(false)
+            return setErr('দয়া করে আপনি আপনার একটি ইমেজ প্রদান করুন')
+        }
+        if (phone.length !== 11) {
+            setLoading(false)
+            return setErr('দয়া করে একটি ভ্যালিড মোবাইল নাম্বার প্রদান করুন')
+        }
 
         let activeRole;
 
@@ -82,10 +90,12 @@ const SignUp = () => {
 
             if (role.area === 'ওয়ার্ড' && ward === 'প্রযোজ্য নয়') {
                 setErr('ওয়ার্ডের নাম প্রদান করুন');
+                setLoading(false)
                 return
             }
             else if (role.area === 'উপশাখা' && unit === 'প্রযোজ্য নয়') {
                 setErr('ইউনিটের নাম প্রদান করুন');
+                setLoading(false)
                 return
             }
         }
@@ -127,14 +137,15 @@ const SignUp = () => {
                     Toast.fire({ icon: 'error', title: 'আপনার রিকুয়েস্ট গ্রহণ করা হয়নি। An unknown error occurred' })
                 }
             })
+        setLoading(false)
 
     }
 
     return (
         <>
-            <div className="flex flex-col justify-center items-center hind min-h-[80vh]">
-                <p className='text-xl pb-5'>দয়া করে সঠিক তথ্য প্রদান করে রেজিস্ট্রেশন সম্পন্ন করুন</p>
-                <form onSubmit={handleRegister} className="border lg:px-16 px-8 py-5 rounded-xl">
+            <div className="flex flex-col justify-center items-center hind mx-[5%]">
+                <p className='text-xl pb-5 text-center'>দয়া করে সঠিক তথ্য প্রদান করে রেজিস্ট্রেশন সম্পন্ন করুন</p>
+                <form onSubmit={handleRegister} className="border lg:px-16 py-5 rounded-xl">
                     <div className='flex flex-col-reverse lg:flex-row justify-center items-center lg:gap-20'>
                         <div>
                             <div
@@ -252,14 +263,19 @@ const SignUp = () => {
                         </div>
                     </div>
                     <div className='text-center'>
-                        <button
-                            className='text-center border px-3 py-2 rounded-xl border-[skyblue] hover:bg-[skyblue] hover:border-cyan-300 hover:text-white transition-all'
-                            type='submit'
-                        >সাবমিট করুন</button>
+                        {loading ?
+                            <button className="btn">
+                                <span className="loading loading-spinner"></span>
+                                loading
+                            </button>
+                            :
+                            <button className='btn btn-info text-white' type='submit'
+                            >সাবমিট করুন</button>
+                        }
                     </div>
                     {err && <p className='text-red-500 text-right'>{err}!!!</p>}
 
-                    <div className='flex justify-center'>
+                    <div className='flex justify-center mx-5'>
                         <p className="my-4">আপনি ইতিপূর্বেই রেজিস্ট্রেশন করে ফেলেছেন? <NavLink to={'/login'} className='text-orange-400 link link-underline'>লগ-ইন করুন</NavLink></p>
                     </div>
                 </form>

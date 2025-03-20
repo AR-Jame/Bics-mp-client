@@ -16,7 +16,7 @@ const Dashboard = () => {
             <div className={`${open ? 'w-52' : 'w-20'}`}>
                 <SideNav open={open} setOpen={setOpen} />
             </div>
-            <div className="flex-1">
+            <div className="flex-1 mb-16">
                 <Suspense fallback={<p>loading.......</p>}>
                     <Outlet />
                 </Suspense>

@@ -5,6 +5,7 @@ import useWard from "../../usehook/useWard";
 import useUnit from "../../usehook/useUnit";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../usehook/useAxiosSecure";
+import useAuth from "../../usehook/useAuth";
 
 
 const UpdateProfile = ({ userData, setUpdateProfile }) => {
@@ -13,6 +14,7 @@ const UpdateProfile = ({ userData, setUpdateProfile }) => {
     const [err, setErr] = useState('');
     const [image, setImage] = useState(userData?.image);
     const [ward, setWard] = useState(null)
+    const { updateUser } = useAuth();
 
     const wards = useWard();
     const units = useUnit(ward);
@@ -20,16 +22,19 @@ const UpdateProfile = ({ userData, setUpdateProfile }) => {
     const axiosSecure = useAxiosSecure();
 
     const { mutate } = useMutation({
-        mutationFn: (formData) => {
-            axiosSecure.put(`/user/profile/${userData?.email}`, formData)
+        mutationFn: async (formData) => {
+            const res = await axiosSecure.patch(`/user/profile/${userData?.email}`, formData)
+            return res.data
         },
-        onSuccess: () => {
-            queryClient.invalidateQueries('profile', userData?.email)
+        onSuccess: (data) => {
+            queryClient.invalidateQueries(['profile', userData?.email])
             setUpdateProfile(false)
+            updateUser(data.updatedImg)
+
         },
         onError: (err) => {
-            console.log(err.data);
-            setErr(err.data.message)
+            console.log(err);
+            setErr(err)
         }
     })
 
@@ -73,9 +78,25 @@ const UpdateProfile = ({ userData, setUpdateProfile }) => {
         const associateDate = form.associateDate.value;
         const memberDate = form.memberDate.value;
 
+
+        for (let i = 0; i < responsibility.length; i++) {
+            const role = responsibility[i];
+            if (role.area === 'ওয়ার্ড' && ward === 'প্রযোজ্য নয়') {
+                setErr('ওয়ার্ডের নাম প্রদান করুন');
+                return
+            }
+            else if (role.area === 'উপশাখা' && unit === 'প্রযোজ্য নয়') {
+                setErr('ইউনিটের নাম প্রদান করুন');
+                return
+            }
+        }
+
         const formData = new FormData();
-        if (image !== userData?.image) {
+
+
+        if (form.image.files.length !== 0) {
             formData.append('image', form.image.files[0]);
+            formData.append('prevImage', userData?.image);
         }
 
         formData.append('name', name);
@@ -95,9 +116,6 @@ const UpdateProfile = ({ userData, setUpdateProfile }) => {
 
         mutate(formData)
     }
-
-
-    console.log('form', userData);
     return (
         <form onSubmit={handleUpdateProfile} className="hind mx-[5%] xl:mx-[10%] space-y-5">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-center" >
@@ -179,7 +197,7 @@ const UpdateProfile = ({ userData, setUpdateProfile }) => {
                             required
                             name='unit'
                             className='select'
-                            defaultValue={userData?.unit}
+                            defaultValue={userData.unit}
                         >
                             <option value="" hidden>উপশাখার নাম</option>
                             {
@@ -241,10 +259,10 @@ const UpdateProfile = ({ userData, setUpdateProfile }) => {
                 </div>
             </div>
             <div className='text-center space-x-2 w-full'>
+                {err && <p className='text-red-500 text-right my-4'>{err}!!!</p>}
                 <button type='submit' className='btn btn-success text-white font-medium' >সাবমিট করুন</button>
                 <button onClick={handleStateCng} type="button" className='btn btn-warning font-medium text-white'>ডিসকার্ড</button>
             </div>
-            {err && <p className='text-red-500 text-right'>{err}!!!</p>}
         </form>
     );
 };

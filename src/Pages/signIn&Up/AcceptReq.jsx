@@ -104,7 +104,7 @@ const AcceptReq = () => {
 
                 <div className='text-center'>
                     <button
-                        className='text-center border px-3 py-2 rounded-xl border-[skyblue] hover:bg-[skyblue] hover:border-cyan-300 hover:text-white transition-all'
+                        className='btn btn-info text-white font-normal'
                         type='submit'
                     >সাবমিট করুন</button>
                 </div>

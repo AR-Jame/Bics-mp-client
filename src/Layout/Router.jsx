@@ -23,6 +23,10 @@ const CreateProgram = lazy(() => import('../Pages/CommonPages/CreateProgram'))
 const Programs = lazy(() => import('../Pages/CommonPages/Programs'))
 const Unit = lazy(() => import('../Pages/dashboard/Ward/Unit'))
 const WardManPower = lazy(() => import('../Pages/dashboard/Ward/WardManPower'))
+const WardnUnitDetails = lazy(() => import("../Pages/CommonPages/WardnUnitDetails"))
+const ProgramDetails = lazy(() => import('../Pages/CommonPages/ProgramDetails'))
+const Supporter = lazy(() => import('../Pages/CommonPages/Supporter'))
+const AddSupporter = lazy(() => import('../Pages/CommonPages/AddSupporter'))
 
 
 const router = createBrowserRouter([
@@ -51,7 +55,10 @@ const router = createBrowserRouter([
                     { path: 'create-unit', element: <CreateUnit /> },
                     { path: 'programs', element: <Programs /> },
                     { path: 'create-program', element: <CreateProgram /> },
-
+                    { path: 'ward-Unit-details/:id', element: <WardnUnitDetails /> },
+                    {path: 'program/details/:id', element: <ProgramDetails />},
+                    {path: 'supporter', element: <Supporter />},
+                    {path: 'add-supporter', element: <AddSupporter />},
 
                     // ward dashboard
                     { path: 'ward-unit-manpower', element: <WardManPower /> },

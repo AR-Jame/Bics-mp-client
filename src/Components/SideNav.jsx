@@ -10,6 +10,7 @@ import group from '../assets/group.png';
 import dashboard from '../assets/dashboard.png';
 import discussion from '../assets/discussion.png';
 import req from '../assets/add-user.png';
+import supporter from '../assets/supporter.webp'
 
 const roleBasedMenus = {
     "থানা": [
@@ -17,18 +18,21 @@ const roleBasedMenus = {
         { title: "সকল শুভাকাঙ্ক্ষী", src: wisher, to: '/dashboard/wisher' },
         { title: "ওয়ার্ড & উপশাখা", src: dashboard, to: '/dashboard/ward-unit' },
         { title: "সকল প্রোগ্রাম", src: discussion, to: '/dashboard/programs' },
-        { title: "রিকুয়েস্টস", src: req, to: '/dashboard/request' }
+        { title: "সমর্থক", src: supporter, to: '/dashboard/supporter' },
+        { title: "রিকুয়েস্টস", src: req, to: '/dashboard/request' },
     ],
     "ওয়ার্ড": [
         { title: "সকল জনশক্তি", src: group, to: '/dashboard/ward-unit-manpower' },
         { title: "সকল শুভাকাঙ্ক্ষী", src: wisher, to: '/dashboard/wisher' },
         { title: "সকল উপশাখা", src: dashboard, to: '/dashboard/unit-list' },
-        { title: "সকল প্রোগ্রাম", src: discussion, to: '/dashboard/programs' }
+        { title: "সকল প্রোগ্রাম", src: discussion, to: '/dashboard/programs' },
+        { title: "সমর্থক", src: supporter, to: '/dashboard/supporter' },
     ],
     "উপশাখা": [
         { title: "সকল জনশক্তি", src: group, to: '/dashboard/ward-unit-manpower' },
         { title: "সকল শুভাকাঙ্ক্ষী", src: wisher, to: '/dashboard/wisher' },
-        { title: "সকল প্রোগ্রাম", src: discussion, to: '/dashboard/programs' }
+        { title: "সকল প্রোগ্রাম", src: discussion, to: '/dashboard/programs' },
+        { title: "সমর্থক", src: supporter, to: '/dashboard/supporter' },
     ]
 };
 
@@ -50,7 +54,7 @@ const SideNav = ({ open, setOpen }) => {
             {/* Sidebar for larger screens */}
             <div className={`fixed top-0 left-0 h-screen bg-[#eeeded86] p-5 pt-8 shadow-xs hind transition-all duration-300
                 ${isMobile ? 'hidden' : open ? 'w-52' : 'w-20'}`}>
-                
+
                 <img
                     src={control}
                     className={`absolute cursor-pointer -right-3 top-9 w-7 border-2 border-dark-purple rounded-full 
@@ -73,7 +77,7 @@ const SideNav = ({ open, setOpen }) => {
                     <ul>
                         <NavLink to={'/profile'}>
                             <li className="flex items-center gap-x-4 p-1 rounded-md cursor-pointer hover:bg-[#8580812d] text-black text-sm mt-2">
-                                <img src={user.photoURL} width={40} height={40} className="rounded-full" />
+                                <img src={userData?.image} width={40} height={40} className="rounded-full" />
                                 <span className={`${!open && 'hidden'} origin-left duration-200`}>প্রোফাইল</span>
                             </li>
                         </NavLink>
@@ -83,7 +87,7 @@ const SideNav = ({ open, setOpen }) => {
 
             {/* Bottom navigation for mobile */}
             {isMobile && (
-                <div className="fixed bottom-0 left-0 w-full bg-dark-purple p-2 hind flex justify-around items-center shadow-md">
+                <div className="fixed z-50 bottom-0 glass left-0 w-full bg-dark-purple p-2 hind flex justify-around items-center shadow-md">
                     {Menus.map((Menu, index) => (
                         <NavLink to={Menu.to} key={index} className="flex flex-col items-center text-white">
                             <img src={Menu.src} className="w-6 mb-1" />

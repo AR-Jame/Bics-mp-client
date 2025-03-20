@@ -37,15 +37,12 @@ const Navbar = () => {
                         <>
                             <NavLink to='/'><li className={lgLiClass}>হোম</li></NavLink>
                             <NavLink to={redirectUrl}><li className={lgLiClass}>ড্যাশবোর্ড</li></NavLink>
-                            <NavLink to='/post'><li className={lgLiClass}>পোস্ট</li></NavLink>
-                            <NavLink to='/profile'><img src={user.photoURL} width={35} height={35} className="rounded-full border" /></NavLink>
+                            <NavLink to='/profile'><img src={userData?.image} width={40} height={40} className="rounded-full border w-[40px] object-cover h-[40px]" /></NavLink>
                         </>
                         :
                         <>
                             <NavLink to='/'><li className={lgLiClass}>হোম</li></NavLink>
-                            <NavLink to='/sign-up'><li className={lgLiClass}>আমাদের সাথে যুক্ত হন</li></NavLink>
-                            <NavLink to='/supporter'><li className={lgLiClass}>সমর্থক হন</li></NavLink>
-
+                            <NavLink to='/sign-up'><li className={lgLiClass}>Join with BICS</li></NavLink>
                         </>
                 }
             </ul>

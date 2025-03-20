@@ -3,7 +3,6 @@ import GetManPower from "../../CommonPages/GetManPower";
 
 const WardManPower = () => {
     const { userData } = useUserContext();
-    // console.log(userData);
     return (
         <div>
             <GetManPower
