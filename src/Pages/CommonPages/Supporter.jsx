@@ -48,7 +48,7 @@ const Supporter = () => {
                 }
             </div>
             <NavLink to='/dashboard/add-supporter'>
-                <button type="button" className="btn btn-circle btn-md btn-primary fixed bottom-12 right-6"><Plus /></button>
+                <button type="button" className="btn btn-circle btn-info fixed bottom-12 right-6"><Plus color="white"/></button>
             </NavLink>
         </div>
     );

@@ -46,8 +46,9 @@ const SignUp = () => {
 
     const handleRegister = (e) => {
         e.preventDefault();
-        setLoading(true)
+        setLoading(prev => prev === true)
         const form = e.target;
+        console.log('i want to check');
 
         const name = form.name.value;
         const email = form.email.value;
@@ -137,7 +138,7 @@ const SignUp = () => {
                     Toast.fire({ icon: 'error', title: 'আপনার রিকুয়েস্ট গ্রহণ করা হয়নি। An unknown error occurred' })
                 }
             })
-        setLoading(false)
+        setLoading(prev => prev === false)
 
     }
 
@@ -264,10 +265,10 @@ const SignUp = () => {
                     </div>
                     <div className='text-center'>
                         {loading ?
-                            <button className="btn">
+                            <p className="btn">
                                 <span className="loading loading-spinner"></span>
                                 loading
-                            </button>
+                            </p>
                             :
                             <button className='btn btn-info text-white' type='submit'
                             >সাবমিট করুন</button>

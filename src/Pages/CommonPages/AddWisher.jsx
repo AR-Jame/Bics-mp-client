@@ -3,6 +3,7 @@ import useAxiosSecure from "../../usehook/useAxiosSecure";
 import useWard from "../../usehook/useWard";
 import { useState } from "react";
 import useUnit from "../../usehook/useUnit";
+import { useNavigate } from "react-router";
 
 const AddWisher = () => {
 
@@ -10,17 +11,19 @@ const AddWisher = () => {
     const queryClient = useQueryClient()
     const [ward, setWard] = useState(null);
     const [err, setErr] = useState('');
+    const navigate = useNavigate();
     const wards = useWard();
     console.log(ward);
     const units = useUnit(ward);
 
-    const { mutate } = useMutation({
+    const { mutate, isPending } = useMutation({
         mutationFn: async (wisher) => {
             console.log('wisher is ', wisher);
             axiosSecure.post('/wisher', wisher)
         },
         onSuccess: () => {
             queryClient.invalidateQueries(['wisher'])
+            navigate('/dashboard/wisher')
         }
     });
 
@@ -54,7 +57,7 @@ const AddWisher = () => {
         mutate({ name, phone, location, amount, thana, ward, unit, payments })
     }
     return (
-        <div className="flex flex-col justify-center w-full items-center hind min-h-[100vh]">
+        <div className="flex flex-col justify-center w-full items-center hind min-h-[80vh]">
             <p className="text-2xl pb-3">নতুন শুভাকাঙ্ক্ষী যুক্ত করুন</p>
             <form onSubmit={handleSubmit} className="border lg:px-16 px-8 py-5 rounded-xl">
                 <div className="wrapper md:w-[450px] w-full">
@@ -101,10 +104,15 @@ const AddWisher = () => {
                     {err && <p className="text-red-500">{err}</p>}
                 </div>
                 <div className='text-center'>
-                    <button
-                        className='text-center border px-3 py-2 rounded-xl border-[skyblue] hover:bg-[skyblue] hover:border-cyan-300 hover:text-white transition-all'
-                        type='submit'
-                    >সাবমিট করুন</button>
+                    {isPending ?
+                        <p className="btn">
+                            <span className="loading loading-spinner"></span>
+                            loading
+                        </p>
+                        :
+                        <button className='btn btn-info text-white' type='submit'
+                        >সাবমিট করুন</button>
+                    }
                 </div>
             </form>
         </div>

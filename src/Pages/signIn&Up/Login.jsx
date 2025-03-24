@@ -10,11 +10,13 @@ const Login = () => {
     const queryClient = useQueryClient();
     const axiosPublic = useAxiosPublic();
     const { login, logOut } = useAuth();
+    const [loading, setLoading] = useState(false)
     const [show, setShow] = useState(true);
     const navigate = useNavigate()
     const Toast = Alert();
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true)
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
@@ -34,6 +36,7 @@ const Login = () => {
                 icon: 'error',
                 title: 'আপনি আমাদের রেজিস্টার্ড ইউজার না। তাই আপনাকে অনুমতি দেয়া যাচ্ছে না'
             })
+            setLoading(false)
             return
         }
         login(email, password)
@@ -51,6 +54,7 @@ const Login = () => {
             }).catch((err) => {
                 console.log(err);
             });
+        setLoading(false)
     }
 
     return (
@@ -74,10 +78,15 @@ const Login = () => {
                     </div>
                 </div>
                 <div className='text-center'>
-                    <button
-                        className='text-center border px-3 py-2 rounded-xl border-[skyblue] hover:bg-[skyblue] hover:border-cyan-300 hover:text-white transition-all'
-                        type='submit'
-                    >সাবমিট করুন</button>
+                    {loading ?
+                        <p className="btn">
+                            <span className="loading loading-spinner"></span>
+                            loading
+                        </p>
+                        :
+                        <button className='btn btn-info text-white' type='submit'
+                        >সাবমিট করুন</button>
+                    }
                 </div>
                 <div>
                     <p className=" my-4">আপনি এখনো রেজিস্ট্রেশন করেননি? <NavLink to={'/sign-up'} className='text-orange-400 link link-underline'>রেজিস্ট্রেশন করুন</NavLink> </p>

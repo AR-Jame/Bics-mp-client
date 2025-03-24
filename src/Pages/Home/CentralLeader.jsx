@@ -1,7 +1,7 @@
 const CentralLeader = () => {
     return (
         <div className='lg:mx-[10%] mx-[5%] mt-16'>
-            <h3 className='mahin text-7xl text-center mb-20'>শিবিরের কেন্দ্রীয় দায়িত্বশীলবৃন্দ</h3>
+            <h3 className='mahin text-4xl lg:text-7xl text-center mb-20'>শিবিরের কেন্দ্রীয় দায়িত্বশীলবৃন্দ</h3>
 
             <div className='flex lg:flex-row flex-col items-center justify-around gap-10'>
                 <div className='text-center'>

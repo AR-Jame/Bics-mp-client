@@ -14,7 +14,7 @@ const AddSupporter = () => {
     console.log(ward);
     const units = useUnit(ward);
 
-    const { mutate } = useMutation({
+    const { mutate, isPending } = useMutation({
         mutationFn: async (data) => {
             await axiosSecure.post('/supporter', data)
         },
@@ -81,10 +81,15 @@ const AddSupporter = () => {
                     </div>
                 </div>
                 <div className='text-center'>
-                    <button
-                        className='btn btn-info text-white'
-                        type='submit'
-                    >সাবমিট করুন</button>
+                    {isPending ?
+                        <p className="btn">
+                            <span className="loading loading-spinner"></span>
+                            loading
+                        </p>
+                        :
+                        <button className='btn btn-info text-white' type='submit'
+                        >সাবমিট করুন</button>
+                    }
                 </div>
             </form>
         </div>

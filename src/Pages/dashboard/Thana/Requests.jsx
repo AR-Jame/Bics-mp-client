@@ -19,8 +19,8 @@ const Requests = () => {
 
     return (
         <div>
-            <p className="text-xl hind lg:text-2xl text-center mt-4 mb-10">সমর্থক তালিকা, <span className="text-cyan-400 font-medium">{userData.activeRole.areaName} {userData.activeRole.area}</span></p>
-            <div className="flex flex-wrap mx-[5%] gap-5 lg:mx-auto">
+            <p className="text-xl hind lg:text-2xl text-center mt-4 mb-10">রিকুয়েস্টস তালিকা, <span className="text-cyan-400 font-medium">{userData.activeRole.areaName} {userData.activeRole.area}</span></p>
+            <div className="flex flex-wrap mx-[5%] gap-5 lg:mx-auto justify-center">
                 {
                     data.map(single => <ReqCard key={single._id} data={single} />)
                 }

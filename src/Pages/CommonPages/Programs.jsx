@@ -31,7 +31,7 @@ const Programs = () => {
             </div>
             <div>
                 <NavLink to={'/dashboard/create-program'} className={'fixed bottom-12 right-5'}>
-                    <button className="btn btn-circle bg-"><Plus /></button>
+                    <button className="btn btn-circle btn-info"><Plus color="white"/></button>
                 </NavLink>
             </div>
         </div>

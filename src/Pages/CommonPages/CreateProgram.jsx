@@ -2,12 +2,14 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useUserContext from "../../usehook/useUserContext";
 import useAxiosSecure from "../../usehook/useAxiosSecure";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 const CreateProgram = () => {
     const axiosSecure = useAxiosSecure();
     const queryClient = useQueryClient();
     const { userData } = useUserContext();
     const [delegates, setDelegates] = useState([]);
+    const navigate = useNavigate();
 
     const [attendance, setAttendance] = useState({});
     const attendanceKey = Object.keys(attendance)
@@ -33,7 +35,8 @@ const CreateProgram = () => {
         },
         onSuccess: (result, variable) => {
             variable.form.reset();
-            queryClient.invalidateQueries('program')
+            queryClient.invalidateQueries('program');
+            navigate('/dashboard/programs')
         },
         onError: (err) => {
             console.log(err);

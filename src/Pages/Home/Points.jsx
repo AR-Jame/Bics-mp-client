@@ -53,7 +53,7 @@ const Points = () => {
     ]
     return (
         <section className="lg:mx-[10%] 2xl:mx-[18%] mx-[5%]">
-            <h2 className="text-7xl text-center mahin mb-16">আমাদের পাঁচ দফা কর্মসূচি</h2>
+            <h2 className="lg:text-7xl text-4xl text-center mahin mb-16">আমাদের পাঁচ দফা কর্মসূচি</h2>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 hind">
                 {
                     data.map(point =>
@@ -61,9 +61,9 @@ const Points = () => {
                             <p className="text-center mahin text-4xl">{point.no}</p>
                             <div style={{ backgroundColor: point.sColor, border: '1px solid' + point.pColor, }} className='h-[480px] relative flex flex-col box_shadow border space-y-4 rounded-2xl p-5'>
                                 <img width={point.width} height={point.height} src={point.pic} className='w-16 mx-auto' />
-                                <h6 style={{ color: point.pColor }} className='text-2xl text-center font-semibold'>{point.title}</h6>
+                                <p style={{ color: point.pColor }} className='text-2xl text-center font-semibold'>{point.title}</p>
                                 <p className='text-xl grow text-center leading-10'>{point.text}</p>
-                                <span className="text-[#1f1e1e1f] lg:text-8xl text-center block">❝</span>
+                                <span className="text-[#1f1e1e1f] lg:text-8xl text-5xl text-center block">❝</span>
                             </div>
                         </div>
                     )

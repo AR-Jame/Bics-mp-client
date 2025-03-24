@@ -1,12 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosPublic from "../../../usehook/useAxiosPublic";
+import { useNavigate } from "react-router";
 
 const CreateWard = () => {
-    const axiosPublic = useAxiosPublic()
+    const axiosPublic = useAxiosPublic();
     const queryClient = useQueryClient();
+    const navigate = useNavigate();
 
-
-    const { mutate } = useMutation({
+    const { mutate, isPending } = useMutation({
         mutationFn: async (data) => {
             console.log(data);
             await axiosPublic.post('/wardnunit/ward', data)
@@ -14,6 +15,7 @@ const CreateWard = () => {
         onSuccess: (data) => {
             queryClient.invalidateQueries('wardnunit')
             console.log(data);
+            navigate('/dashboard/ward-unit')
         },
         onError: (error) => {
             console.log(error);
@@ -43,10 +45,15 @@ const CreateWard = () => {
                     </select>
                 </div>
                 <div className='text-center'>
-                    <button
-                        className='text-center border px-3 py-2 rounded-xl border-[skyblue] hover:bg-[skyblue] hover:border-cyan-300 hover:text-white transition-all'
-                        type='submit'
-                    >সাবমিট করুন</button>
+                    {isPending ?
+                        <p className="btn">
+                            <span className="loading loading-spinner"></span>
+                            loading
+                        </p>
+                        :
+                        <button className='btn btn-info text-white' type='submit'
+                        >সাবমিট করুন</button>
+                    }
                 </div>
             </form>
         </div>

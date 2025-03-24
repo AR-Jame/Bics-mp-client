@@ -1,9 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxiosPublic from "../../../usehook/useAxiosPublic";
+import { useNavigate } from "react-router";
 
 const CreateUnit = () => {
-    const axiosPublic = useAxiosPublic()
+    const axiosPublic = useAxiosPublic();
     const queryClient = useQueryClient();
+    const navigate = useNavigate();
 
     const { data: allWard = [], isLoading } = useQuery({
         queryKey: ['wardnunit'],
@@ -13,13 +15,14 @@ const CreateUnit = () => {
         }
     })
 
-    const { mutate } = useMutation({
+    const { mutate, isPending } = useMutation({
         mutationFn: async (data) => {
             console.log(data);
             await axiosPublic.post('/wardnunit/unit', data)
         },
         onSuccess: (data) => {
-            queryClient.invalidateQueries('wardnunit')
+            queryClient.invalidateQueries('wardnunit');
+            navigate('/dashboard/ward-unit')
             console.log(data);
         },
         onError: (error) => {
@@ -61,10 +64,15 @@ const CreateUnit = () => {
                     </select>
                 </div>
                 <div className='text-center'>
-                    <button
-                        className='text-center border px-3 py-2 rounded-xl border-[skyblue] hover:bg-[skyblue] hover:border-cyan-300 hover:text-white transition-all'
-                        type='submit'
-                    >সাবমিট করুন</button>
+                {isPending ?
+                        <p className="btn">
+                            <span className="loading loading-spinner"></span>
+                            loading
+                        </p>
+                        :
+                        <button className='btn btn-info text-white' type='submit'
+                        >সাবমিট করুন</button>
+                    }
                 </div>
             </form>
         </div>

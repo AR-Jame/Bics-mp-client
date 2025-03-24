@@ -7,15 +7,17 @@ import { useState } from "react";
 import UpdateProfile from "./UpdateProfile";
 import { SquarePen } from 'lucide-react';
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 
 const Profile = () => {
     const axiosSecure = useAxiosSecure();
     const queryClient = useQueryClient();
     const [updateProfile, setUpdateProfile] = useState(false);
+    const navigate = useNavigate();
 
-    const { userData } = useUser();
-    const { user } = useAuth();
+    const { userData, userLoading } = useUser();
+    const { user, logOut } = useAuth();
 
 
     const { mutate } = useMutation({
@@ -64,10 +66,33 @@ const Profile = () => {
     const handleUpdateState = () => {
         setUpdateProfile(true)
     }
+
+    const handleLogout = () => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "আপনি লগ আউট হতে চান???",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                logOut();
+                Swal.fire({
+                    title: "সাকসেস",
+                    text: "আপনি সফলভাবে লগ আউট হয়েছেন।",
+                    icon: "success"
+                });
+                navigate('/')
+            }
+        });
+    }
     console.log(userData);
 
-    if (updateProfile) return <UpdateProfile user={user} userData={userData} setUpdateProfile={setUpdateProfile} />
+    if (userLoading) return <p>loading ...</p>
 
+    if (updateProfile) return <UpdateProfile user={user} userData={userData} setUpdateProfile={setUpdateProfile} />
     return (
         <div className="hind relative items-center grid grid-cols-1 lg:grid-cols-2 gap-5 mx-[5%] xl:mx-[10%]">
             <div className="space-y-4 mt-5">
@@ -127,6 +152,9 @@ const Profile = () => {
                                 </div>)
                         }
                     </div>
+                </div>
+                <div className="flex justify-center items-center my-5">
+                    <button onClick={handleLogout} className="btn btn-outline btn-error text-center mx-auto">লগ আউট</button>
                 </div>
             </div>
             <div onClick={handleUpdateState}>

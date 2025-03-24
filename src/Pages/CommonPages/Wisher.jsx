@@ -56,7 +56,7 @@ const Wisher = () => {
                 }
             </div>
             <NavLink to='/dashboard/create-wisher'>
-                <button type="button" className="btn btn-circle btn-md btn-primary fixed bottom-12 right-[45%]"><Plus /></button>
+                <button type="button" className="btn btn-circle btn-md btn-info fixed bottom-12 right-[45%]"><Plus color="white" /></button>
             </NavLink>
         </div>
     );

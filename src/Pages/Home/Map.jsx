@@ -9,7 +9,7 @@ const Map = () => {
 
     return (
         <div className='mx-[5%] lg:mx-[10%]'>
-            <p className='mahin text-7xl text-center mb-20'>আমাদের থানার অবস্থান</p>
+            <p className='mahin lg:text-7xl text-4xl text-center mb-20'>আমাদের থানার অবস্থান</p>
             <MapContainer
                 className='map'
                 center={[23.700, 90.475]}
